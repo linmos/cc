@@ -4,9 +4,11 @@
       <li v-if="start > counts">
         <a :href="prev" @click="fn(current-1, $event)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
       </li>
-      <li v-if="pageCounts.length" v-for="p in pageCounts" :class="p == c ? 'active' : ''">
-        <a :href="link(p)" @click="p == c ? null : fn(p, $event)" v-text="p"></a>
-      </li>
+      <template v-if="pageCounts.length">
+        <li v-for="p in pageCounts" :key="p" :class="p == c ? 'active' : ''">
+          <a :href="link(p)" @click="p == c ? $event.preventDefault() : fn(p, $event)" v-text="p"></a>
+        </li>
+      </template>
       <li v-if="end != total">
         <a :href="next" @click="fn(current+1, $event)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
       </li>
